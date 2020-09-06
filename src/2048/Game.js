@@ -3,9 +3,12 @@ import Tile from "./Tile";
 import GameControls from "./GameControls";
 import { newTiles, gameEnd, mergeTiles } from "./Tiles";
 
+const initSize = 5
+
 class Game extends React.Component {
   state = {
-    tiles: newTiles(4),
+    size: initSize,
+    tiles: newTiles(initSize),
     score: 0,
     gameover: false
   };
@@ -13,11 +16,22 @@ class Game extends React.Component {
   reset = () => {
     this.setState((state) => ({
       ...state,
-      tiles: newTiles(4),
+      tiles: newTiles(state.size),
       score: 0,
       gameover: false
     }));
   };
+
+  sizeCtl = (val) => {
+    const size = this.state.size + val
+    if(size >= 3 && size <= 7) {
+      this.setState(state => ({
+        ...state,
+        size: size,
+        tiles: newTiles(size),
+      }))
+    }
+  }
 
   merge = (direction, tiles) => {
     let { tiles: newTiles, score } = mergeTiles(tiles, direction);
@@ -32,6 +46,7 @@ class Game extends React.Component {
   };
 
   render() {
+    const tilesClassNames = `tiles g-${this.state.size}`
     return (
       <div
         className="board"
@@ -44,8 +59,10 @@ class Game extends React.Component {
           gameover={this.state.gameover}
           score={this.state.score}
           reset={this.reset}
+          sizeCtl={this.sizeCtl}
+          size={this.state.size}
         ></GameControls>
-        <div className="tiles">
+        <div className={tilesClassNames}>
           {this.state.tiles.map((row, rIndex) =>
             row.map((tile, tIndex) => {
               let key = `${rIndex}-${tIndex}`

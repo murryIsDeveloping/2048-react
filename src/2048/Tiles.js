@@ -77,7 +77,7 @@ const calcCells = (tiles) => {
   tiles.forEach((row) => {
     let {tiles: merged, score } = merge(row.filter((x) => x !== ""));
     totalScore += score
-    let padding = 4 - merged.length;
+    let padding = tiles.length - merged.length;
     matrix.push([...merged, ...Array(padding).fill("")]);
   });
 

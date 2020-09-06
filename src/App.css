@@ -80,11 +80,45 @@ h3 {
 }
 
 .tiles {
-  margin-top: 20px;
+  margin: 20px 0;
   display: grid;
-  grid-template-columns: 60px 60px 60px 60px;
-  grid-template-rows: 60px 60px 60px 60px;
   gap: 4px;
+
+}
+
+.tiles.g-3 {
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(3, 60px);
+}
+
+.tiles.g-4 {
+  grid-template-columns: repeat(4, 60px);
+  grid-template-rows: repeat(4, 60px);
+}
+
+.tiles.g-5 {
+  grid-template-columns: repeat(5, 60px);
+  grid-template-rows: repeat(5, 60px);
+}
+
+.tiles.g-6 {
+  grid-template-columns: repeat(6, 60px);
+  grid-template-rows: repeat(6, 60px);
+}
+
+.tiles.g-7 {
+  grid-template-columns: repeat(7, 60px);
+  grid-template-rows: repeat(7, 60px);
+}
+
+.size-contoller {
+  margin-bottom: 20px;
+}
+
+.size-contoller span {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 10px;
 }
 
 .v-2 {
