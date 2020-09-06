@@ -39,6 +39,7 @@ class Game extends React.Component {
         onKeyDown={(event) => this.merge(event.key, this.state.tiles)}
       >
         <h2>2048</h2>
+        <p>Use the arrow keys to control the direction the tiles move. Merge tiles together to gain points.</p>
         <GameControls
           gameover={this.state.gameover}
           score={this.state.score}
