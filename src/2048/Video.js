@@ -1,5 +1,7 @@
 import React from "react";
+import Toggle from "../utility/Toggle";
 import * as handTrack from "handtrackjs";
+import Draggable from "react-draggable";
 
 const hasGetUserMedia = () => {
   return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -36,7 +38,7 @@ class Video extends React.Component {
       flipHorizontal: true,
       maxNumBoxes: 1,
       iouThreshold: 0.5,
-      scoreThreshold: 0.7,
+      scoreThreshold: 0.85,
     };
 
     handTrack.load(modelParams).then((model) => {
@@ -76,14 +78,14 @@ class Video extends React.Component {
       let prev = this.state.hand;
       let current = prediction.bbox;
 
-      let xDif = prev[0] + prev[2] - (current[0] + current[2]);
-      let yDif = prev[1] + prev[3] - (current[1] + current[3]);
+      let xDif = prev[0] - current[0];
+      let yDif = prev[1] - current[1];
 
       let useX = Math.abs(xDif) > Math.abs(yDif);
 
-      if (useX && Math.abs(xDif) > 35) {
+      if (useX && Math.abs(xDif) > 30) {
         this.props.merge(xDif > 0 ? "LEFT" : "RIGHT");
-      } else if (Math.abs(yDif) > 30) {
+      } else if (Math.abs(yDif) > 15) {
         this.props.merge(yDif > 0 ? "UP" : "DOWN");
       }
     }
@@ -98,7 +100,7 @@ class Video extends React.Component {
           this.handControl(predictions[0]);
           this.setState((state) => ({
             ...state,
-            hand: predictions.length ? predictions[0].bbox : null,
+            hand: predictions.length ? predictions[0].bbox : state.hand,
           }));
         })
         .catch((err) => {
@@ -107,35 +109,33 @@ class Video extends React.Component {
     }, 500);
   }
 
-  renderToggle() {
-      let show = this.state.show
-    return (
-      <React.Fragment>
-        <h3>
-          {show ? "Turn Hand Motion Off" : "Turn Hand Motion On"}
-        </h3>
-        <div className={"toggle" + (show ? " active" : "")} onClick={() => this.toggleHandControl()}>
-            <div className="inner-toggle"></div>
-        </div>
-      </React.Fragment>
-    );
-  }
-
   render() {
     const showToggle = this.state.camera && !this.state.show;
     if (showToggle) {
-      return this.renderToggle();
+      return (
+        <Toggle
+          show={this.state.show}
+          onToggle={() => this.toggleHandControl()}
+        ></Toggle>
+      );
     } else if (this.state.show) {
       return (
         <React.Fragment>
-          {this.renderToggle()}
-          <video
-            width={250}
-            height={170}
-            autoPlay={true}
-            id="videoElement"
-            ref={this.videoRef}
-          ></video>
+          <Toggle
+            show={this.state.show}
+            onToggle={() => this.toggleHandControl()}
+          ></Toggle>
+          <Draggable>
+            <div className="video-wrapper" draggable={true}>
+                <video
+                    width={280}
+                    height={200}
+                    autoPlay={true}
+                    id="videoElement"
+                    ref={this.videoRef}
+                ></video>
+            </div>
+          </Draggable>
         </React.Fragment>
       );
     } else {

@@ -1,0 +1,53 @@
+.toggle {
+  cursor: pointer;
+  height: 30px;
+  width: 60px;
+  background-color: #bfd3c1;
+  border-radius: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.toggle.active {
+  justify-content: flex-end;
+  background-color: #68a691;
+}
+
+.inner-toggle {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: solid 2px #bfd3c1;
+}
+
+.toggle.active .inner-toggle {
+  border: solid 2px #68a691;
+}
+
+.plus-minus {
+  display: flex;
+  align-items: flex-end;
+}
+
+.plus-minus-btn {
+  color: #68A691;
+  padding: 0 15px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 28px;
+  transition: color ease 0.3s;
+}
+
+.plus-minus-btn:hover {
+  cursor: pointer;
+  color: #BFD3C1;
+}
+
+.plus-minus .plus-minus-value {
+  color: #68A691;
+  padding: 0;
+  font-weight: bold;
+  font-size: 25px;
+}
