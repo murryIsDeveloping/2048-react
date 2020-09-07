@@ -107,10 +107,10 @@ const mergeUp = mergeFn(3);
 const matrixEqual = (matrix1, matrix2) => JSON.stringify(matrix1) === JSON.stringify(matrix2)
 
 export const mergeTiles = (tiles, direction) => {
-  const merged = direction === "ArrowLeft" ? mergeLeft(tiles)
-               : direction === "ArrowRight" ? mergeRight(tiles)
-               : direction === "ArrowDown" ? mergeDown(tiles)
-               : direction === "ArrowUp" ? mergeUp(tiles)
+  const merged = direction === "ArrowLeft" || direction === "LEFT" ? mergeLeft(tiles)
+               : direction === "ArrowRight" || direction === "RIGHT" ? mergeRight(tiles)
+               : direction === "ArrowDown" || direction === "DOWN" ? mergeDown(tiles)
+               : direction === "ArrowUp" || direction === "UP" ? mergeUp(tiles)
                : { tiles, score: 0 };
     
 
