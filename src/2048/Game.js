@@ -90,7 +90,7 @@ class Game extends React.Component {
             )}
           </div>
         </Swipeable>
-        <p class="directions">
+        <p className="directions">
           <strong>Merge tiles together to gain points.</strong>
           <br/>If your on a computer use the arrow keys. 
           <br/>If on a mobile swipe the tiles.

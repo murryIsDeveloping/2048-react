@@ -92,8 +92,12 @@ class Video extends React.Component {
   }
 
   detect() {
-    let video = document.getElementById("videoElement");
     this.intervalSub = setInterval(() => {
+      let video = document.getElementById("videoElement");
+      if(!video){
+        return
+      }
+
       this.handModel
         .detect(video)
         .then((predictions) => {
@@ -106,7 +110,7 @@ class Video extends React.Component {
         .catch((err) => {
           console.log(err);
         });
-    }, 500);
+    }, 600);
   }
 
   render() {
