@@ -16,6 +16,7 @@ class Video extends React.Component {
     camera: false,
     hand: null,
     show: false,
+    loading: false,
   };
 
   hasGetUserMedia = () => {
@@ -26,6 +27,7 @@ class Video extends React.Component {
     if (hasGetUserMedia()) {
       this.setState((state) => ({
         ...state,
+        loading: true,
         camera: true,
       }));
 
@@ -41,12 +43,22 @@ class Video extends React.Component {
       scoreThreshold: 0.85,
     };
 
+    console.log("loading hand model...")
     handTrack.load(modelParams).then((model) => {
       this.handModel = model;
+      this.setState((state) => ({
+        ...state,
+        loading: false,
+      }))
+      console.log("loaded hand model")
     });
   }
 
   toggleHandControl() {
+    if(this.state.loading) {
+      return;
+    }
+
     if (this.state.show) {
       this.setState((state) => ({
         ...state,
@@ -94,8 +106,11 @@ class Video extends React.Component {
   detect() {
     this.intervalSub = setInterval(() => {
       let video = document.getElementById("videoElement");
-      if(!video){
-        return
+      if(!video || !this.handModel){
+        console.log("Happened")
+        return this.setState(state => ({
+          ...state
+        }))
       }
 
       this.handModel
@@ -117,10 +132,13 @@ class Video extends React.Component {
     const showToggle = this.state.camera && !this.state.show;
     if (showToggle) {
       return (
+        <React.Fragment>
         <Toggle
           show={this.state.show}
           onToggle={() => this.toggleHandControl()}
         ></Toggle>
+        {this.state.loading ? <span className="loading-model">Loading...</span> : null}
+        </React.Fragment>
       );
     } else if (this.state.show) {
       return (

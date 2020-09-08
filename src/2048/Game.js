@@ -92,10 +92,15 @@ class Game extends React.Component {
         </Swipeable>
         <p className="directions">
           <strong>Merge tiles together to gain points.</strong>
-          <br/>If your on a computer use the arrow keys. 
-          <br/>If on a mobile swipe the tiles.
-          <br/> If your feeling really brave toggle the <strong>"use hand motion controller" </strong> 
-          and try to play by waving your hands side to side and using them as controls.
+          <br />
+          If your on a computer use the arrow keys.
+          <br />
+          If on a mobile swipe the tiles.
+          <br /> If your feeling really brave toggle the{" "}
+          <strong>"use hand motion controller" </strong>
+          and try to play by waving your hands side to side and using them as
+          controls. The hand controls may take a few seconds or minutes before
+          they can be enabled as required packages need to be loaded.
         </p>
       </div>
     );
